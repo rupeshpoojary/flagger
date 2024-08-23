@@ -488,6 +488,16 @@ spec:
                         type:
                           format: string
                           type: string
+                        uriRegexRewrite:
+                          description: Rewrite HTTP URIs using regex matching and replacement
+                          type: object
+                          properties:
+                            match:
+                              format: string
+                              type: string
+                            rewrite:
+                              format: string
+                              type: string
                     mirror:
                       description: Mirror defines a schema for a filter that mirrors requests.
                       type: array
