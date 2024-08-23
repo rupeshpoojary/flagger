@@ -660,6 +660,14 @@ type HTTPRedirect struct {
 	// On a redirect, overwrite the Authority/Host portion of the URL with
 	// this value.
 	Authority string `json:"authority,omitempty"`
+
+	
+	UriRegexRewrite *UriRegexRewrite `json:"uriRegexRewrite,omitempty"`
+}
+
+type UriRegexRewrite struct {
+	Match   string `json:"match,omitempty"`
+	Rewrite string `json:"rewrite,omitempty"`
 }
 
 // HTTPRewrite can be used to rewrite specific parts of a HTTP request
