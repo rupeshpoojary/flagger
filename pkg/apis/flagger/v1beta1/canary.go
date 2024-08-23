@@ -506,6 +506,15 @@ type HTTPRewrite struct {
 	// Type is the type of path modification to make.
 	// +optional
 	Type string `json:"type,omitempty"`
+
+	// added for UriRegexRewrite
+	UriRegexRewrite *UriRegexRewrite `json:"uriRegexRewrite,omitempty"`
+}
+
+// extend the rewrite block for uriregrexrewrite
+type UriRegexRewrite struct {
+	Match   string `json:"match,omitempty"`
+	Rewrite string `json:"rewrite,omitempty"`
 }
 
 // GetType returns the type of HTTP path rewrite to be performed.
@@ -519,10 +528,19 @@ func (r *HTTPRewrite) GetType() string {
 // GetIstioRewrite returns a istiov1beta1.HTTPRewrite object.
 func (s *CanaryService) GetIstioRewrite() *istiov1beta1.HTTPRewrite {
 	if s.Rewrite != nil {
-		return &istiov1beta1.HTTPRewrite{
+		rewrite := &istiov1beta1.HTTPRewrite{
 			Authority: s.Rewrite.Authority,
 			Uri:       s.Rewrite.Uri,
 		}
+
+		if s.Rewrite.UriRegexRewrite != nil {
+			rewrite.UriRegexRewrite = &istiov1beta1.UriRegexRewrite{
+				Match:   s.Rewrite.UriRegexRewrite.Match,
+				Rewrite: s.Rewrite.UriRegexRewrite.Rewrite,
+			}
+		}
+
+		return rewrite
 	}
 	return nil
 }
